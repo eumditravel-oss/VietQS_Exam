@@ -321,7 +321,7 @@ h1{
 
 /* Hero 텍스트 블록 자체를 카드 라인까지만 */
 .hero-left{
-  max-width: 920px;   /* ← 핵심: 여기 값으로 라인에 맞춤 */
+  max-width: 100%;   /* ← 핵심: 여기 값으로 라인에 맞춤 */
 }
 
 /* 긴 문장(베트남어)이 줄바꿈 없이 길게 늘어지는 것 방지 */
@@ -333,13 +333,14 @@ h1{
 
 /* h1은 한 줄 고정보다, 라인 안에서 자연스럽게 줄바꿈되게 */
 .hero-left h1{
-  white-space: normal;        /* 이전 nowrap 사용했다면 반드시 해제 */
-  font-size: clamp(30px, 3.2vw, 44px);
-  line-height: 1.2;
+  font-size: clamp(30px, 3.0vw, 44px);
+  line-height: 1.18;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 .download-card{
-  max-width: 920px;   /* hero-left와 동일 */
+  max-width: 100%;   /* hero-left와 동일 */
 }
 
 
