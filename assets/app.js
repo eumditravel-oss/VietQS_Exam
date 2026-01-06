@@ -29,15 +29,15 @@ function build(){
   }).join("");
 
   // Step 카드들
-  stepsContainer.innerHTML = steps.map((s, i) => {
-    const n = i + 1;
-    const imgPath = `images/step${pad2(n)}.png`;
-    return `
-      <article class="step-card" id="step${n}" data-step="${n}">
-        <div class="step-img">
-          <img src="${imgPath}" alt="Step ${n} 안내 이미지" loading="lazy"
-               onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;muted&quot;>이미지 없음<br/>(${imgPath})</div>';">
-        </div>
+stepsContainer.innerHTML = steps.map((s, i) => {
+  const n = i + 1;
+  const imgPath = `images/step_${pad2(n)}.png`; // ← 여기만 변경
+  return `
+    <article class="step-card" id="step${n}" data-step="${n}">
+      <div class="step-img">
+        <img src="${imgPath}" alt="Step ${n} 안내 이미지" loading="lazy"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;muted&quot;>이미지 없음<br/>(${imgPath})</div>';">
+      </div>
         <div>
           <div class="step-meta">
             <div class="step-no">
