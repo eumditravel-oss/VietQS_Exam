@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Viet QS 시험 안내 · 프로그램 다운로드 & 절차</title>
+  <meta name="description" content="시험 전 필수 프로그램 다운로드 및 진행 절차(12단계) 안내" />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="logo">VQ</div>
+        <div class="brand-text">
+          <div class="brand-title">Viet QS 시험 안내</div>
+          <div class="brand-sub">프로그램 다운로드 · 진행 절차 12단계</div>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="ghost" id="btnScrollDownload">다운로드</button>
+        <button class="ghost" id="btnScrollSteps">절차 보기</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="badge">시험 시작 전 필수</div>
+        <h1>프로그램을 먼저 다운로드하고,<br/>아래 12단계 절차대로 진행하세요.</h1>
+        <p class="muted">
+          다운로드 후 실행/설정/확인까지 한 번에 따라할 수 있도록,
+          사진 12장과 간단 설명을 세트로 정리했습니다.
+        </p>
+
+        <div class="download-card" id="download">
+          <div class="download-left">
+            <div class="dl-title">시험용 프로그램 파일</div>
+            <div class="dl-sub">GitHub에 업로드된 파일을 바로 다운로드합니다.</div>
+          </div>
+          <div class="download-right">
+            <!-- ✅ 여기 링크만 바꾸면 됨 -->
+            <a class="btn primary" href="downloads/Program.zip" download>
+              프로그램 다운로드
+            </a>
+            <div class="dl-note">파일이 막히면: Releases 업로드 방식도 가능 (아래 설명 참고)</div>
+          </div>
+        </div>
+
+        <div class="helper">
+          <div class="helper-title">진행 팁</div>
+          <ul>
+            <li>각 Step은 사진과 글이 1:1로 매칭됩니다.</li>
+            <li>상단 “절차 보기”를 누르면 바로 Step 1로 이동합니다.</li>
+            <li>모바일에서도 가독성 유지되도록 카드형으로 구성했습니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="panel">
+          <div class="panel-title">진행 현황</div>
+          <div class="progress">
+            <div class="progress-bar" id="progressBar" style="width:0%"></div>
+          </div>
+          <div class="panel-sub">
+            현재 보고 있는 단계: <span id="currentStep">-</span> / 12
+          </div>
+
+          <div class="quick">
+            <div class="quick-title">빠른 이동</div>
+            <div class="quick-grid" id="quickGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEPS -->
+    <section class="section" id="steps">
+      <div class="section-head">
+        <h2>진행 절차 (12 Steps)</h2>
+        <p class="muted">사진과 설명을 보면서 순서대로 진행하세요.</p>
+      </div>
+
+      <div class="steps" id="stepsContainer">
+        <!-- JS로 12개 자동 생성 -->
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="muted">
+        © Viet QS · 시험 안내 페이지 (GitHub Pages)
+      </div>
+    </footer>
+  </main>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
