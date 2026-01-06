@@ -226,7 +226,7 @@ h1{
 /* ✅ Step 카드: 이미지 크게 */
 .step-card{
   display:grid;
-  grid-template-columns: 420px 1fr;  /* 기존 220px → 420px */
+  grid-template-columns: 520px 1fr;  /* 기존 220px → 420px */
   gap:18px;
   padding:18px;
   border-radius: var(--radius);
@@ -304,9 +304,7 @@ h1{
 }
 
 
-.step-card{
-  grid-template-columns: 520px 1fr; /* 이미지 영역 더 확장 */
-}
+
 
 /* ✅ 진행절차 기준 폭 (공통 라인) */
 .content-line {
@@ -342,5 +340,11 @@ h1{
 
 .download-card{
   max-width: 920px;   /* hero-left와 동일 */
+}
+
+
+.hero-left h1{
+  max-width: 100%;
+  overflow-wrap: anywhere;  /* 긴 단어/문장도 안전하게 줄바꿈 */
 }
 
