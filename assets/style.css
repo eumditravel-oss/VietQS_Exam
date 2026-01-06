@@ -27,6 +27,9 @@ body{
   margin:0 auto;
 }
 
+/* =========================
+   TOP BAR
+========================= */
 .topbar{
   position:sticky;
   top:0;
@@ -35,7 +38,6 @@ body{
   background: rgba(246,241,230,.72);
   border-bottom: 1px solid var(--line);
 }
-
 .topbar-inner{
   display:flex;
   align-items:center;
@@ -43,7 +45,6 @@ body{
   padding:14px 0;
   gap:12px;
 }
-
 .brand{ display:flex; align-items:center; gap:12px; }
 .logo{
   width:44px; height:44px;
@@ -69,15 +70,28 @@ body{
 }
 .ghost:hover{ border-color: rgba(0,0,0,.18); }
 
+/* =========================
+   HERO (✅ 여기만 넓게 사용)
+========================= */
+/* ✅ 기존 2컬럼 grid 때문에 오른쪽이 빈 공간으로 남았음 → 1컬럼으로 변경 */
 .hero{
-  display:grid;
-  grid-template-columns: 1.25fr .75fr;
-  gap:18px;
+  display:block;
   padding:22px 0 10px;
 }
 
-@media (max-width: 900px){
-  .hero{ grid-template-columns:1fr; }
+/* Hero 텍스트/카드가 wrap 폭을 꽉 쓰도록 */
+.hero-left{
+  max-width: 100%;
+}
+
+/* 메인 타이틀 */
+h1{
+  margin:14px 0 10px;
+  font-size:36px;
+  line-height:1.15;
+}
+@media (max-width: 520px){
+  h1{ font-size:28px; }
 }
 
 .badge{
@@ -93,17 +107,22 @@ body{
   font-size:13px;
 }
 
-h1{
-  margin:14px 0 10px;
-  font-size:36px;
-  line-height:1.15;
-}
-@media (max-width: 520px){
-  h1{ font-size:28px; }
-}
-
 .muted{ color:var(--muted); }
 
+/* ✅ 긴 베트남어 문장도 안전하게 줄바꿈 */
+.hero-left h1,
+.hero-left p{
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+/* ✅ hero 제목 라인 높이/크기 조절 */
+.hero-left h1{
+  font-size: clamp(30px, 3.0vw, 44px);
+  line-height: 1.18;
+}
+
+/* 다운로드 카드 */
 .download-card{
   margin-top:16px;
   display:flex;
@@ -115,6 +134,7 @@ h1{
   border:1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+  max-width: 100%;
 }
 @media (max-width: 700px){
   .download-card{ flex-direction:column; align-items:stretch; }
@@ -140,6 +160,9 @@ h1{
 }
 .btn.primary:hover{ filter: brightness(1.03); }
 
+/* =========================
+   OPTIONAL PANELS (현재는 안 쓰면 무시됨)
+========================= */
 .helper{
   margin-top:14px;
   padding:14px 16px;
@@ -203,6 +226,9 @@ h1{
   border-color: rgba(0,0,0,.18);
 }
 
+/* =========================
+   SECTION / STEPS
+========================= */
 .section{
   padding:20px 0 40px;
 }
@@ -223,10 +249,10 @@ h1{
   gap:12px;
 }
 
-/* ✅ Step 카드: 이미지 크게 */
+/* Step 카드 */
 .step-card{
   display:grid;
-  grid-template-columns: 520px 1fr;  /* 기존 220px → 420px */
+  grid-template-columns: 520px 1fr;
   gap:18px;
   padding:18px;
   border-radius: var(--radius);
@@ -235,10 +261,9 @@ h1{
   box-shadow: var(--shadow);
   scroll-margin-top: 84px;
 }
-
 @media (max-width: 900px){
   .step-card{
-    grid-template-columns: 1fr;      /* 모바일은 세로 */
+    grid-template-columns: 1fr;
     padding:16px;
   }
 }
@@ -246,22 +271,19 @@ h1{
 /* Step 이미지 전체 보이게 */
 .step-img{
   width:100%;
-  height:auto;                /* 높이 자동 */
-  min-height: 260px;          /* 카드 균형 유지용 */
+  height:auto;
+  min-height: 260px;
   display:flex;
   align-items:center;
   justify-content:center;
   background: #fff;
 }
-
 .step-img img{
   width:100%;
   height:auto;
   max-height: 100%;
-  object-fit: contain;        /* ❗ 핵심: 이미지 잘림 방지 */
+  object-fit: contain;
 }
-
-
 
 .step-meta{
   display:flex;
@@ -285,7 +307,6 @@ h1{
   color: var(--accent);
 }
 
-/* ✅ 텍스트 가독성 살짝 업 */
 .step-title{
   margin:10px 0 8px;
   font-size:20px;
@@ -298,54 +319,10 @@ h1{
   font-size:15px;
 }
 
+/* =========================
+   FOOTER
+========================= */
 .footer{
   padding:22px 0 40px;
   border-top:1px solid var(--line);
 }
-
-
-
-
-/* ✅ 진행절차 기준 폭 (공통 라인) */
-.content-line {
-  max-width: 1080px;   /* 진행절차 카드가 차지하는 실제 시각적 폭 */
-  margin: 0 auto;
-}
-
-
-/* ✅ 진행절차 카드 오른쪽 라인 침범 방지: Hero 텍스트 폭 제한 */
-.hero .content-line{
-  max-width: 1080px;
-  margin: 0 auto;
-}
-
-/* Hero 텍스트 블록 자체를 카드 라인까지만 */
-.hero-left{
-  max-width: 100%;   /* ← 핵심: 여기 값으로 라인에 맞춤 */
-}
-
-/* 긴 문장(베트남어)이 줄바꿈 없이 길게 늘어지는 것 방지 */
-.hero-left h1,
-.hero-left p{
-  overflow-wrap: anywhere;
-  word-break: keep-all;
-}
-
-/* h1은 한 줄 고정보다, 라인 안에서 자연스럽게 줄바꿈되게 */
-.hero-left h1{
-  font-size: clamp(30px, 3.0vw, 44px);
-  line-height: 1.18;
-  word-break: keep-all;
-  overflow-wrap: anywhere;
-}
-
-.download-card{
-  max-width: 100%;   /* hero-left와 동일 */
-}
-
-
-.hero-left h1{
-  max-width: 100%;
-  overflow-wrap: anywhere;  /* 긴 단어/문장도 안전하게 줄바꿈 */
-}
-
