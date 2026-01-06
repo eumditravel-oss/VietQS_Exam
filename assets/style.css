@@ -323,3 +323,29 @@ h1{
 }
 
 
+/* ✅ 진행절차 카드 오른쪽 라인 침범 방지: Hero 텍스트 폭 제한 */
+.hero .content-line{
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* Hero 텍스트 블록 자체를 카드 라인까지만 */
+.hero-left{
+  max-width: 920px;   /* ← 핵심: 여기 값으로 라인에 맞춤 */
+}
+
+/* 긴 문장(베트남어)이 줄바꿈 없이 길게 늘어지는 것 방지 */
+.hero-left h1,
+.hero-left p{
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+/* h1은 한 줄 고정보다, 라인 안에서 자연스럽게 줄바꿈되게 */
+.hero-left h1{
+  white-space: normal;        /* 이전 nowrap 사용했다면 반드시 해제 */
+  font-size: clamp(30px, 3.2vw, 44px);
+  line-height: 1.2;
+}
+
+
