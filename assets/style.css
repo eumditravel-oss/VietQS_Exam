@@ -316,3 +316,10 @@ h1{
   grid-template-columns: 520px 1fr; /* 이미지 영역 더 확장 */
 }
 
+/* ✅ 진행절차 기준 폭 (공통 라인) */
+.content-line {
+  max-width: 1080px;   /* 진행절차 카드가 차지하는 실제 시각적 폭 */
+  margin: 0 auto;
+}
+
+
