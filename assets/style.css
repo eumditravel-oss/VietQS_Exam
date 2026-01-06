@@ -302,3 +302,12 @@ h1{
   padding:22px 0 40px;
   border-top:1px solid var(--line);
 }
+
+/* 메인 타이틀 한 줄 고정 */
+.hero h1{
+  white-space: nowrap;        /* 줄바꿈 금지 */
+  width: 100%;
+  font-size: clamp(28px, 3.5vw, 44px); /* 화면에 따라 자동 크기 조절 */
+  line-height: 1.25;
+}
+
