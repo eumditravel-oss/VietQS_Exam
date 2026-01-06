@@ -1,9 +1,8 @@
 /* =====================================================
-   Viet QS 시험 안내 페이지 - Step 컨트롤러
-   이미지 규칙: images/step_01.png ~ step_12.png
+   Viet QS 시험 안내 - spp.js (안전/디버그 버전)
+   이미지 규칙: /images/step_01.png ~ step_12.png
    ===================================================== */
 
-/* 🔹 STEP 텍스트 (필요하면 여기만 수정) */
 const steps = [
   { title: "Step 1. 프로그램 다운로드", desc: "상단 다운로드 버튼을 눌러 시험용 프로그램 파일을 다운로드합니다." },
   { title: "Step 2. 압축 해제", desc: "다운로드한 파일의 압축을 해제합니다." },
@@ -19,127 +18,115 @@ const steps = [
   { title: "Step 12. 결과 제출", desc: "완료된 결과 파일을 제출합니다." }
 ];
 
-/* 🔹 DOM */
-const stepsContainer = document.getElementById("stepsContainer");
-const quickGrid = document.getElementById("quickGrid");
-const progressBar = document.getElementById("progressBar");
-const currentStepEl = document.getElementById("currentStep");
+function pad2(n){ return String(n).padStart(2, "0"); }
 
-/* 🔹 유틸 */
-function pad2(num) {
-  return String(num).padStart(2, "0");
-}
+function $(id){ return document.getElementById(id); }
 
-/* =====================================================
-   STEP 카드 생성
-   ===================================================== */
-function renderSteps() {
-  /* 빠른 이동 버튼 */
+function render(){
+  const stepsContainer = $("stepsContainer");
+  const quickGrid = $("quickGrid");
+
+  if (!stepsContainer || !quickGrid) {
+    console.error("[spp.js] 필수 DOM을 못 찾음:", { stepsContainer, quickGrid });
+    return;
+  }
+
+  // 빠른 이동
   quickGrid.innerHTML = "";
   steps.forEach((_, i) => {
+    const n = i + 1;
     const a = document.createElement("a");
-    a.href = `#step${i + 1}`;
-    a.textContent = i + 1;
+    a.href = `#step${n}`;
+    a.textContent = n;
     quickGrid.appendChild(a);
   });
 
-  /* STEP 카드 */
+  // Step 카드
   stepsContainer.innerHTML = "";
+  steps.forEach((s, i) => {
+    const n = i + 1;
 
-  steps.forEach((step, i) => {
-    const stepNo = i + 1;
-    const imgPath = `images/step_${pad2(stepNo)}.png`; // ✅ 핵심
+    // ✅ 문서 기준 상대경로를 확실하게 고정
+    const imgPath = `./images/step_${pad2(n)}.png`;
 
-    const article = document.createElement("article");
-    article.className = "step-card";
-    article.id = `step${stepNo}`;
-    article.dataset.step = stepNo;
+    const card = document.createElement("article");
+    card.className = "step-card";
+    card.id = `step${n}`;
+    card.dataset.step = String(n);
 
-    article.innerHTML = `
-      <div class="step-img">
-        <img 
-          src="${imgPath}" 
-          alt="Step ${stepNo} 안내 이미지"
-          loading="lazy"
-        />
-      </div>
+    card.innerHTML = `
+      <div class="step-img" data-imgwrap="1"></div>
       <div>
         <div class="step-meta">
           <div class="step-no">
-            <span class="pill">STEP ${stepNo}</span>
+            <span class="pill">STEP ${n}</span>
             <span class="muted">시험 절차</span>
           </div>
           <a class="btn" href="#download">다운로드</a>
         </div>
-        <div class="step-title">${step.title}</div>
-        <p class="step-desc">${step.desc}</p>
+        <div class="step-title">${s.title}</div>
+        <p class="step-desc">${s.desc}</p>
       </div>
     `;
 
-    /* 🔻 이미지 로드 실패 시 대체 처리 */
-    const img = article.querySelector("img");
+    const wrap = card.querySelector('[data-imgwrap="1"]');
+
+    const img = new Image();
+    img.loading = "lazy";
+    img.alt = `Step ${n} 안내 이미지`;
+    img.src = imgPath;
+
+    img.onload = () => {
+      console.log("[spp.js] 이미지 로드 성공:", imgPath);
+      wrap.innerHTML = "";
+      wrap.appendChild(img);
+    };
+
     img.onerror = () => {
-      img.remove();
-      article.querySelector(".step-img").innerHTML = `
-        <div class="muted" style="text-align:center; font-size:13px;">
-          이미지 없음<br/>
-          <strong>${imgPath}</strong>
+      console.error("[spp.js] 이미지 로드 실패:", imgPath);
+      wrap.innerHTML = `
+        <div class="muted" style="text-align:center; font-size:13px; padding:8px;">
+          이미지 로드 실패<br/>
+          <strong>${imgPath}</strong><br/>
+          (파일명/경로/Pages 배포 설정 확인)
         </div>
       `;
     };
 
-    stepsContainer.appendChild(article);
+    stepsContainer.appendChild(card);
   });
 }
 
-/* =====================================================
-   진행률 표시
-   ===================================================== */
-function updateProgress() {
+function bindButtons(){
+  const btnDownload = $("btnScrollDownload");
+  const btnSteps = $("btnScrollSteps");
+
+  if (btnDownload) btnDownload.onclick = () => $("download")?.scrollIntoView({behavior:"smooth"});
+  if (btnSteps) btnSteps.onclick = () => $("steps")?.scrollIntoView({behavior:"smooth"});
+}
+
+function updateProgress(){
+  const progressBar = $("progressBar");
+  const currentStepEl = $("currentStep");
   const cards = document.querySelectorAll(".step-card");
-  let current = 1;
+  if (!progressBar || !currentStepEl || !cards.length) return;
 
+  let current = 1;
   cards.forEach(card => {
-    const rect = card.getBoundingClientRect();
-    if (rect.top <= 140) {
-      current = Number(card.dataset.step);
-    }
+    const r = card.getBoundingClientRect();
+    if (r.top <= 140) current = Number(card.dataset.step);
   });
 
-  const percent = Math.round((current / steps.length) * 100);
-  progressBar.style.width = `${percent}%`;
-  currentStepEl.textContent = current;
+  const pct = Math.round((current / steps.length) * 100);
+  progressBar.style.width = `${pct}%`;
+  currentStepEl.textContent = String(current);
 }
 
-/* =====================================================
-   상단 버튼 스크롤
-   ===================================================== */
-function bindTopButtons() {
-  const btnDownload = document.getElementById("btnScrollDownload");
-  const btnSteps = document.getElementById("btnScrollSteps");
-
-  if (btnDownload) {
-    btnDownload.onclick = () => {
-      document.getElementById("download")
-        .scrollIntoView({ behavior: "smooth" });
-    };
-  }
-
-  if (btnSteps) {
-    btnSteps.onclick = () => {
-      document.getElementById("steps")
-        .scrollIntoView({ behavior: "smooth" });
-    };
-  }
-}
-
-/* =====================================================
-   INIT
-   ===================================================== */
 document.addEventListener("DOMContentLoaded", () => {
-  renderSteps();
+  console.log("[spp.js] DOMContentLoaded - 시작");
+  render();
+  bindButtons();
   updateProgress();
-  bindTopButtons();
 
   window.addEventListener("scroll", updateProgress, { passive: true });
   window.addEventListener("resize", updateProgress);
